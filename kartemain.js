@@ -18,3 +18,6 @@ let map = L.map("map", {
 L.control.scale({
     imperial: false,
 }).addTo(map);
+
+// Fullscreen hinzufügen
+L.control.fullscreen().addTo(map);

@@ -13,3 +13,8 @@ let map = L.map("map", {
         startLayer
     ]
 });
+
+// Maßstab hinzufügen
+L.control.scale({
+    imperial: false,
+}).addTo(map);

@@ -51,7 +51,7 @@ async function loadSites(url) {
     let response = await fetch(url);    
     let geojson = await response.json();
 
-    let overlay = L.featureGroup();
+    let overlay = L.markerClusterGroup();
     layerControl.addOverlay(overlay, "Almzentren");
     overlay.addTo(map);
 
@@ -75,3 +75,4 @@ async function loadSites(url) {
     }).addTo(overlay);
 }
 loadSites("https://data-tiris.opendata.arcgis.com/datasets/tiris::almzentren-1.geojson");
+

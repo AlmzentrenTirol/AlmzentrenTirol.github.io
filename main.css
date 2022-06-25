@@ -1,0 +1,49 @@
+/* Stile für die Beschreibungskarte */
+
+/* Google Fonts laden */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Open+Sans:ital@0;1&family=Roboto:wght@300&display=swap');
+
+body {
+    background-color: #eeeeee;
+    font-family: 'Open Sans', sans-serif;
+}
+
+main p {
+    font-family: 'Roboto', sans-serif;
+}
+
+h1, h2, h3 {
+    font-family: 'Montserrat', sans-serif;
+}
+
+img.banner {
+    width: 100%;
+}
+
+main {
+    background-color: white;
+    max-width: 1024px;
+    margin: auto;
+}
+
+article {
+    padding: 1em;
+}
+
+article p {
+    text-align: justify;
+    line-height: 1.2em;
+}
+
+article figure img {
+    width: 100%;
+}
+
+a {
+    color: black;
+}
+
+footer {
+    border-top: 1px solid black;
+    padding: 1em 2em 3em 2em;
+}

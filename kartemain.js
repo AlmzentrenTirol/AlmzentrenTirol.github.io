@@ -26,7 +26,8 @@ let layerControl = L.control.layers({
     "Basemap mit Orthofoto und Beschriftung": L.layerGroup([
         L.tileLayer.provider("BasemapAT.orthofoto"),
         L.tileLayer.provider("BasemapAT.overlay"),
-    ])
+    ]),
+    "Esri World Imagery": L.tileLayer.provider("Esri.WorldImagery")
 }).addTo(map);
 
 layerControl.expand();
@@ -76,3 +77,57 @@ async function loadSites(url) {
 }
 loadSites("https://data-tiris.opendata.arcgis.com/datasets/tiris::almzentren-1.geojson");
 
+
+
+// Overlays für Wind- und Wettervorhersage
+const overlays = {
+    "wind": L.featureGroup().addTo(map),
+    "weather": L.featureGroup().addTo(map),
+};
+
+// Datum formatieren
+let formatDate = function(date) {
+    return date.toLocaleDateString("de-AT", {
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+    }) + " Uhr";
+}
+
+// Windvorhersage
+async function loadWind(url) {
+    const response = await fetch(url);
+    const jsondata = await response.json();
+
+
+    let forecastDate = new Date(jsondata[0].header.refTime);
+
+    forecastDate.setHours(forecastDate.getHours() + jsondata[0].header.forecastTime);
+
+
+    let forecastLabel = formatDate(forecastDate);
+
+    layerControl.addOverlay(overlays.wind, `ECMWF Windvorhersage für ${forecastLabel}`)
+
+    L.velocityLayer({
+        data: jsondata,
+        lineWidth: 5,
+        displayOptions: {
+            velocityType: "",
+            directionString: "Windrichtung",
+            speedString: "Windgeschwindigkeit",
+            speedUnit: "k/h",
+            emptyString: "keine Daten vorhanden",
+            position: "bottomright"
+        }
+    }).addTo(overlays.wind);
+
+};
+loadWind("https://geographie.uibk.ac.at/webmapping/ecmwf/data/wind-10u-10v-europe.json");
+
+// Wettervorhersage
+async function loadWeather(url) {
+
+};
+loadWeather("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=47.267222&lon=11.392778");

@@ -117,7 +117,7 @@ async function loadWind(url) {
             velocityType: "",
             directionString: "Windrichtung",
             speedString: "Windgeschwindigkeit",
-            speedUnit: "k/h",
+            speedUnit: "km/h",
             emptyString: "keine Daten vorhanden",
             position: "bottomright"
         }

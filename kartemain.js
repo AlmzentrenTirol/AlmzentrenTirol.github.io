@@ -49,7 +49,7 @@ let miniMap = new L.Control.MiniMap(
 
 // Almzentren Marker und Pop-Up mit Beschriftung
 async function loadSites(url) {
-    let response = await fetch(url);    
+    let response = await fetch(url);
     let geojson = await response.json();
 
     let overlay = L.markerClusterGroup();
@@ -57,7 +57,7 @@ async function loadSites(url) {
     overlay.addTo(map);
 
     L.geoJSON(geojson, {
-        pointToLayer: function(geoJsonPoint, latlng) {
+        pointToLayer: function (geoJsonPoint, latlng) {
             let popup = `
                 <strong>${geoJsonPoint.properties.NAME}</strong>
                 <hr>
@@ -86,7 +86,7 @@ const overlays = {
 };
 
 // Datum formatieren
-let formatDate = function(date) {
+let formatDate = function (date) {
     return date.toLocaleDateString("de-AT", {
         month: "long",
         day: "numeric",
@@ -137,8 +137,8 @@ async function loadWeather(url) {
     const response = await fetch(url);
     const jsondata = await response.json();
 
-       // Marker positionieren
-       marker.setLatLng([
+    // Marker positionieren
+    marker.setLatLng([
         jsondata.geometry.coordinates[1],
         jsondata.geometry.coordinates[0]
     ]);
@@ -162,8 +162,8 @@ async function loadWeather(url) {
         </ul>
     `;
 
-       // Wettericons
-       for (let i=0; i <= 24; i+=3) {
+    // Wettericons
+    for (let i = 0; i <= 24; i += 3) {
         let symbol = jsondata.properties.timeseries[i].data.next_1_hours.summary.symbol_code;
         let forecastDate = new Date(jsondata.properties.timeseries[i].time);
         let forecastLabel = formatDate(forecastDate);
@@ -176,7 +176,7 @@ async function loadWeather(url) {
 loadWeather("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=47.267222&lon=11.392778");
 
 // auf Klick auf die Karte reagieren
-map.on("click", function(evt) {
+map.on("click", function (evt) {
 
     let url = `https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${evt.latlng.lat}&lon=${evt.latlng.lng}`;
 

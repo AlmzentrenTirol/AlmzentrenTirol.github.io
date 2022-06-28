@@ -1,14 +1,44 @@
 /* Stile für die Kartenwebsite */
 
+/* Google Fonts laden */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Open+Sans:ital@0;1&family=Roboto:wght@300&display=swap');
+
+header {
+    display: flex;
+    justify-content: space-between;
+    max-height: 50px;
+    padding: 10px;
+}
+
+header h1 {
+    margin: 0;
+    margin-bottom: 7px;
+}
+
+body {
+    background-color: #eeeeee;
+    font-family: 'Open Sans', sans-serif;
+}
+
 main {
+    background-color: white;
     max-width: 1200px;
     margin: auto;
 }
 
+h1, h2, h3 {
+    font-family: 'Montserrat', sans-serif;
+}
+
+article {
+    padding: 1em;
+}
+
 article #map {
-    width: 100%;
+    width: 99%;
     height: 85vh;
     border: 1px solid gray;
+    margin: auto;
 }
 
 .leaflet-control-velocity {

@@ -54,30 +54,30 @@ async function loadSites(url) {
     let response = await fetch(url);
     let geojson = await response.json();
 
- // Almzentren nach Name sortieren
- geojson.features.sort(function(a, b) {
+    // Almzentren nach Name sortieren
+    geojson.features.sort(function (a, b) {
 
-    if (a.properties.NAME.toLowerCase() > b.properties.NAME.toLowerCase()) {
-    
-    return 1;
-    
-    }
-    
-    if (a.properties.NAME.toLowerCase() < b.properties.NAME.toLowerCase()) {
-    
-    return -1;
-    
-    }
-    
-    return 0; // wenn die Namen identisch sind
-    
+        if (a.properties.NAME.toLowerCase() > b.properties.NAME.toLowerCase()) {
+
+            return 1;
+
+        }
+
+        if (a.properties.NAME.toLowerCase() < b.properties.NAME.toLowerCase()) {
+
+            return -1;
+
+        }
+
+        return 0; // wenn die Namen identisch sind
+
     });
 
     let overlay = L.markerClusterGroup();
     layerControl.addOverlay(overlay, "Almzentren");
     overlay.addTo(map);
 
-    let almzentrenLayer=L.geoJSON(geojson, {
+    let almzentrenLayer = L.geoJSON(geojson, {
         pointToLayer: function (geoJsonPoint, latlng) {
 
             let List = document.querySelector("#searchList");
@@ -105,9 +105,9 @@ async function loadSites(url) {
     }).addTo(overlay);
 
     let form = document.querySelector("#searchForm");
-    form.suchen.onclick = function() {
-        almzentrenLayer.eachLayer(function(marker) {
-           
+    form.suchen.onclick = function () {
+        almzentrenLayer.eachLayer(function (marker) {
+
             if (form.almzentrum.value == marker.feature.properties.NAME) {
                 map.setView(marker.getLatLng(), 17);
                 marker.openPopup();

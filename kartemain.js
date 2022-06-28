@@ -56,8 +56,22 @@ async function loadSites(url) {
 
  // Almzentren nach Name sortieren
  geojson.features.sort(function(a, b) {
-    return a.properties.NAME.toLowerCase() > b.properties.NAME.toLowerCase()
-})
+
+    if (a.properties.NAME.toLowerCase() > b.properties.NAME.toLowerCase()) {
+    
+    return 1;
+    
+    }
+    
+    if (a.properties.NAME.toLowerCase() < b.properties.NAME.toLowerCase()) {
+    
+    return -1;
+    
+    }
+    
+    return 0; // wenn die Namen identisch sind
+    
+    });
 
     let overlay = L.markerClusterGroup();
     layerControl.addOverlay(overlay, "Almzentren");
@@ -66,8 +80,12 @@ async function loadSites(url) {
     let almzentrenLayer=L.geoJSON(geojson, {
         pointToLayer: function (geoJsonPoint, latlng) {
 
-            let searchList = document.querySelector("#searchList");
-            searchList.innerHTML += `<option value="${geoJsonPoint.properties.NAME}"></option>`;
+            let List = document.querySelector("#searchList");
+            let option = document.createElement('option');
+
+            option.value = geoJsonPoint.properties.NAME;
+
+            searchList.appendChild(option);
 
             let popup = `
                 <strong>${geoJsonPoint.properties.NAME}</strong>

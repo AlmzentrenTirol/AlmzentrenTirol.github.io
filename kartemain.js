@@ -54,12 +54,21 @@ async function loadSites(url) {
     let response = await fetch(url);
     let geojson = await response.json();
 
+ // Almzentren nach Name sortieren
+ geojson.features.sort(function(a, b) {
+    return a.properties.NAME.toLowerCase() > b.properties.NAME.toLowerCase()
+})
+
     let overlay = L.markerClusterGroup();
     layerControl.addOverlay(overlay, "Almzentren");
     overlay.addTo(map);
 
-    L.geoJSON(geojson, {
+    let almzentrenLayer=L.geoJSON(geojson, {
         pointToLayer: function (geoJsonPoint, latlng) {
+
+            let searchList = document.querySelector("#searchList");
+            searchList.innerHTML += `<option value="${geoJsonPoint.properties.NAME}"></option>`;
+
             let popup = `
                 <strong>${geoJsonPoint.properties.NAME}</strong>
                 <hr>
@@ -76,6 +85,17 @@ async function loadSites(url) {
             }).bindPopup(popup);
         }
     }).addTo(overlay);
+
+    let form = document.querySelector("#searchForm");
+    form.suchen.onclick = function() {
+        almzentrenLayer.eachLayer(function(marker) {
+           
+            if (form.almzentrum.value == marker.feature.properties.NAME) {
+                map.setView(marker.getLatLng(), 17);
+                marker.openPopup();
+            }
+        })
+    }
 }
 loadSites("https://data-tiris.opendata.arcgis.com/datasets/tiris::almzentren-1.geojson");
 

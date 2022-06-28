@@ -27,7 +27,9 @@ let layerControl = L.control.layers({
         L.tileLayer.provider("BasemapAT.orthofoto"),
         L.tileLayer.provider("BasemapAT.overlay"),
     ]),
-    "Esri World Imagery": L.tileLayer.provider("Esri.WorldImagery")
+    "Esri World Imagery": L.tileLayer.provider("Esri.WorldImagery"),
+    "Esri World Topo Map": L.tileLayer.provider("Esri.WorldTopoMap"),
+    "Esri World Street Map": L.tileLayer.provider("Esri.WorldStreetMap")
 }).addTo(map);
 
 layerControl.expand();
@@ -42,7 +44,7 @@ L.control.fullscreen().addTo(map);
 
 // Minimap hinzufügen
 let miniMap = new L.Control.MiniMap(
-    L.tileLayer.provider("BasemapAT"), {
+    L.tileLayer.provider("Esri.WorldStreetMap"), {
         toggleDisplay: true
     }
 ).addTo(map);
